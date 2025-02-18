@@ -1,5 +1,6 @@
 ﻿using BookManagement.DataAccess.Operations.BooksOperations.AddBooks;
 using BookManagement.DataAccess.Operations.BooksOperations.CreateBook;
+using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingBulkBooks;
 using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingSingleBook;
 using BookManagement.DataAccess.Operations.BooksOperations.UpdateBook;
 using MediatR;
@@ -44,6 +45,14 @@ namespace BookManagement.Api.Controllers
 
         [HttpPut("soft-delete-book")]
         public async Task<IActionResult> SoftDeleteBook([FromBody] SoftDeletingSingleBookCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
+
+        [HttpPut("soft-delete-books")]
+        public async Task<IActionResult> SoftDeleteBooks([FromBody] SoftDeletingBulkBooksCommand command)
         {
             await _mediator.Send(command);
 
