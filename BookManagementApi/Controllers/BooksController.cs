@@ -1,5 +1,6 @@
 ﻿using BookManagement.DataAccess.Operations.BooksOperations.AddBooks;
 using BookManagement.DataAccess.Operations.BooksOperations.CreateBook;
+using BookManagement.DataAccess.Operations.BooksOperations.UpdateBook;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,14 @@ namespace BookManagement.Api.Controllers
 
         [HttpPost("add-books")]
         public async Task<IActionResult> AddBooks([FromBody] AddBooksCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
+
+        [HttpPut("update-book")]
+        public async Task<IActionResult> UpdateBook([FromBody] UpdateBookCommand command)
         {
             await _mediator.Send(command);
 
