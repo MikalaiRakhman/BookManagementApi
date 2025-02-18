@@ -2,7 +2,7 @@
 
 namespace BookManagement.Models.Entities
 {
-    public class User: IdentityUser<Guid>
+    public class User: IdentityUser
     {
     }
 }
