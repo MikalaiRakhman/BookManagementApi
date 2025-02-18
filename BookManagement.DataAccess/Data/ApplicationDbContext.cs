@@ -17,6 +17,8 @@ namespace BookManagement.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Book>().HasKey(b => b.Title);
         }
     }
 }
