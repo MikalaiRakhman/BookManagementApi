@@ -16,7 +16,14 @@ namespace BookManagement.DataAccess.Operations.BooksOperations.GetBookDetails
 
         public async Task<Book> Handle(GetBookDetailsQuerry request, CancellationToken cancellationToken)
         {
-            return await _context.Books.FirstAsync(x => x.Title == request.Title);
+            var book = await _context.Books.FirstAsync(x => x.Title == request.Title);
+            Guard.AgainstNull(book, nameof(book));
+
+            book.ViewsCount++;
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return book;
         }
     }
 }
