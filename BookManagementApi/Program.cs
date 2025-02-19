@@ -1,6 +1,8 @@
 using BookManagement.DataAccess.Data;
 using BookManagement.DataAccess.Operations.BooksOperations.CreateBook;
 using Microsoft.EntityFrameworkCore;
+using BookManagement.DataAccess.Operations.BooksOperations.AddBooks;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +16,12 @@ builder.Services.AddSwaggerGen();
 //data access
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddMediatR(cnf =>
 {
-    cnf.RegisterServicesFromAssemblies(typeof(CreateBookCommand).Assembly);
+    cnf.RegisterServicesFromAssemblies(typeof(Program).Assembly, typeof(CreateBookCommandHandler).Assembly, typeof(AddBooksCommandHandler).Assembly);
 });
+
 
 var app = builder.Build();
 

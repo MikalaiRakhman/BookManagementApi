@@ -16,6 +16,7 @@ namespace BookManagement.Api.Controllers
     {
         private readonly IMediator _mediator;
 
+
         public BooksController(IMediator mediator)
         {
             _mediator = mediator;
@@ -24,6 +25,11 @@ namespace BookManagement.Api.Controllers
         [HttpPost("create-book")]
         public async Task<IActionResult> CreateBook([FromBody] CreateBookCommand command)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             await _mediator.Send(command);
 
             return Ok();
