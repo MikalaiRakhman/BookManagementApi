@@ -1,4 +1,5 @@
 ﻿using BookManagement.DataAccess.Data;
+using BookManagement.DataAccess.Operations.Services;
 using BookManagement.Models.Entities;
 using MediatR;
 
@@ -17,6 +18,11 @@ namespace BookManagement.DataAccess.Operations.BooksOperations.AddBooks
         {
             foreach (var bookDTO in request.Books)
             {
+                if (await BookService.IsTitleAlreadyInTheBaseAsync(bookDTO.Title, _context))
+                {
+                    throw new Exception($"Book with the title {bookDTO.Title} already exists");
+                }
+
                 var book = new Book
                 {
                     Title = bookDTO.Title,
