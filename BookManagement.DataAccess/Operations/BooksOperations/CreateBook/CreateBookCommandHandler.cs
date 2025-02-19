@@ -1,4 +1,5 @@
 ﻿using BookManagement.DataAccess.Data;
+using BookManagement.DataAccess.Operations.Services;
 using BookManagement.Models.Entities;
 using MediatR;
 
@@ -14,6 +15,11 @@ namespace BookManagement.DataAccess.Operations.BooksOperations.CreateBook
         }
         public async Task Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
+            if(await BookService.IsTitleAlreadyInTheBaseAsync(request.Title, _context))
+            {
+                throw new Exception("Book with this title already exists");
+            }
+
             var book = new Book
             {
                 Title = request.Title,
@@ -26,6 +32,6 @@ namespace BookManagement.DataAccess.Operations.BooksOperations.CreateBook
             await _context.AddAsync(book);
 
             await _context.SaveChangesAsync(cancellationToken);
-        }
+        }        
     }
 }
