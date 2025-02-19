@@ -5,6 +5,7 @@ using BookManagement.DataAccess.Operations.BooksOperations.GetPaginatedBooks;
 using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingBulkBooks;
 using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingSingleBook;
 using BookManagement.DataAccess.Operations.BooksOperations.UpdateBook;
+using BookManagement.DataAccess.Operations.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,16 @@ namespace BookManagement.Api.Controllers
         [HttpPost("add-books")]
         public async Task<IActionResult> AddBooks([FromBody] AddBooksCommand command)
         {
+            if(command.Books == null || command.Books.Count == 0)
+            {
+                return BadRequest("Books list cannot be null or empty");
+            }
+
+            if (!BookService.ValidateBookDTOModel(command.Books, out var validationResults))
+            {
+                return BadRequest(validationResults);
+            }
+
             await _mediator.Send(command);
 
             return Ok();
