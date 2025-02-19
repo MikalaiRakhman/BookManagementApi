@@ -1,6 +1,4 @@
-﻿
-
-namespace BookManagement.DataAccess.Operations.Models.DTOModels
+﻿namespace BookManagement.DataAccess.Operations.Models.DTOModels
 {
     public class BookDetailsDTOModel
     {
