@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingSingleBook
+namespace BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingBulkBooks.SoftDeletingSingleBook
 {
     public record SoftDeletingSingleBookCommand : IRequest
     {
