@@ -1,6 +1,6 @@
-﻿namespace BookManagement.DataAccess.Operations.DTOModels
+﻿namespace BookManagement.DataAccess.Operations.Models.DTOModels
 {
-    public class BookDTO
+    public class BookDTOModel
     {
         public string Title { get; set; }
         public string AuthorName { get; set; }

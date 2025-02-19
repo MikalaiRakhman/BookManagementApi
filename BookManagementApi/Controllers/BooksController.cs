@@ -1,7 +1,8 @@
 ﻿using BookManagement.DataAccess.Operations.BooksOperations.AddBooks;
 using BookManagement.DataAccess.Operations.BooksOperations.CreateBook;
+using BookManagement.DataAccess.Operations.BooksOperations.GetPaginatedBooks;
 using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingBulkBooks;
-using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingSingleBook;
+using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingBulkBooks.SoftDeletingSingleBook;
 using BookManagement.DataAccess.Operations.BooksOperations.UpdateBook;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,14 @@ namespace BookManagement.Api.Controllers
             await _mediator.Send(command);
 
             return Ok();
+        }
+
+        [HttpGet("get-paginated-books")]
+        public async Task<IActionResult> GetPaginatedBooks([FromQuery] GetPaginatedBooksQuerry querry)
+        {
+            var result = await _mediator.Send(querry);
+
+            return Ok(result);
         }
     }
 }
