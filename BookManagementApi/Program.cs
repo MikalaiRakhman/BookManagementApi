@@ -1,17 +1,47 @@
 using BookManagement.DataAccess.Data;
 using BookManagement.DataAccess.Identity;
+using BookManagement.DataAccess.Operations.BooksOperations.CreateBook;
 using BookManagement.Models.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "BookManagementApi", Version = "v1" });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Enter the JWT token using the Bearer scheme.",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+});
 
 //data access layer services
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -19,7 +49,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddMediatR(cnf =>
 {
-    cnf.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+    cnf.RegisterServicesFromAssemblies(typeof(Program).Assembly, typeof(CreateBookCommand).Assembly);
 });
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
@@ -66,7 +96,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "ShortLink V1");
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "BookManagementApi V1");
     });
 }
 
