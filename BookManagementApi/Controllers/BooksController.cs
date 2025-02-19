@@ -7,12 +7,14 @@ using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingSingleBoo
 using BookManagement.DataAccess.Operations.BooksOperations.UpdateBook;
 using BookManagement.DataAccess.Operations.Services;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookManagement.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BooksController : Controller
     {
         private readonly IMediator _mediator;
