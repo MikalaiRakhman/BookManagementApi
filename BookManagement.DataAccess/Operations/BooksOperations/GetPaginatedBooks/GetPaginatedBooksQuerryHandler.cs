@@ -19,6 +19,7 @@ namespace BookManagement.DataAccess.Operations.BooksOperations.GetPaginatedBooks
         {
             return await _context.Books
                 .Where(b => b.IsDeleted == false)
+                .OrderByDescending(b => b.ViewsCount * 0.5 + (DateTime.Now.Year - b.PublicationYear) * 2)
                 .Select(b => new BookTitleDTOModel
                 {
                     Title = b.Title
