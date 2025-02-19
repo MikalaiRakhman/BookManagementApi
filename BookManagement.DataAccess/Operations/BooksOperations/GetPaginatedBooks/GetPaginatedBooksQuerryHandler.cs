@@ -18,6 +18,7 @@ namespace BookManagement.DataAccess.Operations.BooksOperations.GetPaginatedBooks
         public async Task<PaginatedListModel<BookTitleDTOModel>> Handle(GetPaginatedBooksQuerry request, CancellationToken cancellationToken)
         {
             return await _context.Books
+                .Where(b => b.IsDeleted == false)
                 .Select(b => new BookTitleDTOModel
                 {
                     Title = b.Title

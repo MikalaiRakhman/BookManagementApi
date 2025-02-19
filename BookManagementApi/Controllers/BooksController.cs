@@ -3,7 +3,7 @@ using BookManagement.DataAccess.Operations.BooksOperations.CreateBook;
 using BookManagement.DataAccess.Operations.BooksOperations.GetBookDetails;
 using BookManagement.DataAccess.Operations.BooksOperations.GetPaginatedBooks;
 using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingBulkBooks;
-using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingBulkBooks.SoftDeletingSingleBook;
+using BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingSingleBook;
 using BookManagement.DataAccess.Operations.BooksOperations.UpdateBook;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

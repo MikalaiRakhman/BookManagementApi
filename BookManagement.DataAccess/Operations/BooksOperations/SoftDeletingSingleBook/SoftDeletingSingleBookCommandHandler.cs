@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingBulkBooks.SoftDeletingSingleBook
+namespace BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingSingleBook
 {
     public class SoftDeletingSingleBookCommandHandler : IRequestHandler<SoftDeletingSingleBookCommand>
     {
