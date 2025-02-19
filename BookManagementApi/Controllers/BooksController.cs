@@ -57,6 +57,11 @@ namespace BookManagement.Api.Controllers
         [HttpPut("update-book")]
         public async Task<IActionResult> UpdateBook([FromBody] UpdateBookCommand command)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             await _mediator.Send(command);
 
             return Ok();

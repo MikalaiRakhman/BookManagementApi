@@ -1,8 +1,5 @@
 using BookManagement.DataAccess.Data;
-using BookManagement.DataAccess.Operations.BooksOperations.CreateBook;
 using Microsoft.EntityFrameworkCore;
-using BookManagement.DataAccess.Operations.BooksOperations.AddBooks;
-using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +16,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddMediatR(cnf =>
 {
-    cnf.RegisterServicesFromAssemblies(typeof(Program).Assembly, typeof(CreateBookCommandHandler).Assembly, typeof(AddBooksCommandHandler).Assembly);
+    cnf.RegisterServicesFromAssemblies(typeof(Program).Assembly);
 });
-
 
 var app = builder.Build();
 
