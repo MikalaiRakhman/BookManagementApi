@@ -72,17 +72,31 @@ namespace BookManagement.Api.Controllers
         [HttpPut("soft-delete-book")]
         public async Task<IActionResult> SoftDeleteBook([FromBody] SoftDeletingSingleBookCommand command)
         {
-            await _mediator.Send(command);
+            try
+            {
+                await _mediator.Send(command);
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }            
         }
 
         [HttpPut("soft-delete-books")]
         public async Task<IActionResult> SoftDeleteBooks([FromBody] SoftDeletingBulkBooksCommand command)
         {
-            await _mediator.Send(command);
+            try
+            {
+                await _mediator.Send(command);
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("get-paginated-books")]

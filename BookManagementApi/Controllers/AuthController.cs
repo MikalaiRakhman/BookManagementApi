@@ -3,6 +3,7 @@ using BookManagement.DataAccess.Data;
 using BookManagement.DataAccess.Identity;
 using BookManagement.DataAccess.Identity.IdentityModels;
 using BookManagement.Models.Entities;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,25 +48,40 @@ namespace BookManagement.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            Guard.AgainstUnauthorized(user);
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                Guard.AgainstUnauthorized(user);
 
-            var isValidPassword = await _userManager.CheckPasswordAsync(user, model.Password);
-            Guard.AgainsInvalidPassword(isValidPassword);
+                var isValidPassword = await _userManager.CheckPasswordAsync(user, model.Password);
+                Guard.AgainsInvalidPassword(isValidPassword);
 
-            var token = _tokenProvider.GenerateJwtToken(user);
+                var token = _tokenProvider.GenerateJwtToken(user);
 
-            var refreshToken = _tokenProvider.GenerateRefreshToken(user.Id, cancellationToken);
+                var refreshToken = _tokenProvider.GenerateRefreshToken(user.Id, cancellationToken);
 
-            return Ok(new { Token = token, RefreshToken = refreshToken.Result });
+                return Ok(new { Token = token, RefreshToken = refreshToken.Result });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenModel model, CancellationToken cancellationToken)
         {
-            var (newJwtToken, newRefreshToken) = await _tokenProvider.RefreshTokens(model.RefreshToken, cancellationToken);
+            try
+            {
 
-            return Ok(new { Token = newJwtToken, RefreshToken = newRefreshToken });
+                var (newJwtToken, newRefreshToken) = await _tokenProvider.RefreshTokens(model.RefreshToken, cancellationToken);
+
+                return Ok(new { Token = newJwtToken, RefreshToken = newRefreshToken });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
