@@ -16,11 +16,13 @@ namespace BookManagement.DataAccess.Data
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override async void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Book>().HasKey(b => b.Title);
+
+            ApplicationDbContextInitializer.SeedData(modelBuilder);
         }
     }
 }
