@@ -19,7 +19,7 @@ namespace BookManagement.DataAccess.Operations.BooksOperations.SoftDeletingBulkB
                 var book = await _context.Books.FirstAsync(b => b.Title == title);
                 Guard.AgainstNull(book, nameof(book));
 
-                book.IsDeleted = true;                
+                book.IsDeleted = true;
             }
 
             await _context.SaveChangesAsync(cancellationToken);

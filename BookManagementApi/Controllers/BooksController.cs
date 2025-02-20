@@ -81,7 +81,7 @@ namespace BookManagement.Api.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-            }            
+            }
         }
 
         [HttpPut("soft-delete-books")]

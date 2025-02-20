@@ -32,6 +32,6 @@ namespace BookManagement.DataAccess.Operations.BooksOperations.CreateBook
             await _context.AddAsync(book);
 
             await _context.SaveChangesAsync(cancellationToken);
-        }        
+        }
     }
 }

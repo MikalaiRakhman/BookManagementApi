@@ -1,6 +1,5 @@
 ﻿using BookManagement.DataAccess.Data;
 using BookManagement.DataAccess.Operations.Models.DTOModels;
-using BookManagement.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 

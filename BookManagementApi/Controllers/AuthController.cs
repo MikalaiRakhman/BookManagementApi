@@ -3,7 +3,6 @@ using BookManagement.DataAccess.Data;
 using BookManagement.DataAccess.Identity;
 using BookManagement.DataAccess.Identity.IdentityModels;
 using BookManagement.Models.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -73,7 +72,6 @@ namespace BookManagement.Api.Controllers
         {
             try
             {
-
                 var (newJwtToken, newRefreshToken) = await _tokenProvider.RefreshTokens(model.RefreshToken, cancellationToken);
 
                 return Ok(new { Token = newJwtToken, RefreshToken = newRefreshToken });
